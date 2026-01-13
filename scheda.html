@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheda Valutazione Priorità - Continuità Assistenziale Ostetrica</title>
+    <style>
+        :root {
+            --color-primary: #208091;
+            --color-primary-dark: #1a6370;
+            --color-success: #2db87e;
+            --color-warning: #f5a623;
+            --color-danger: #d0454f;
+            --color-bg: #f5f5f5;
+            --color-surface: #ffffff;
+            --color-text: #333333;
+            --color-text-light: #666666;
+            --color-border: #ddd;
+            --radius: 8px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            margin: 0;
+            padding: var(--spacing-md);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--color-surface);
+            border-radius: var(--radius);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: var(--spacing-lg);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            border-bottom: 3px solid var(--color-primary);
+            padding-bottom: var(--spacing-md);
+        }
+
+        .header h1 {
+            margin: 0 0 8px 0;
+            color: var(--color-primary);
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--color-text-light);
+            font-size: 14px;
+        }
+
+        .section {
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background: #f9f9f9;
+            border-left: 4px solid var(--color-primary);
+            border-radius: 4px;
+        }
+
+        .section h2 {
+            margin: 0 0 var(--spacing-md) 0;
+            color: var(--color-primary);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+            color: var(--color-text);
+            font-size: 14px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group input[type="number"],
+        .form-group input[type="tel"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px var(--spacing-sm);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(32, 128, 145, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .checkbox-item input,
+        .radio-item input {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox-item label,
+        .radio-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-md) 0;
+            background: white;
+            font-size: 13px;
+        }
+
+        .score-table th,
+        .score-table td {
+            padding: var(--spacing-sm);
+            text-align: left;
+            border: 1px solid var(--color-border);
+        }
+
+        .score-table th {
+            background: #f0f0f0;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            padding: var(--spacing-sm);
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+
+        .score-item input[type="radio"] {
+            cursor: pointer;
+        }
+
+        .score-item label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .score-result {
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: #e8f4f8;
+            border-left: 4px solid var(--color-primary);
+            border-radius: 4px;
+            font-weight: 500;
+            color: var(--color-primary);
+        }
+
+        .risk-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: var(--spacing-sm);
+        }
+
+        .risk-low {
+            background: rgba(45, 184, 126, 0.2);
+            color: #2db87e;
+        }
+
+        .risk-medium {
+            background: rgba(245, 166, 35, 0.2);
+            color: #f5a623;
+        }
+
+        .risk-high {
+            background: rgba(208, 69, 79, 0.2);
+            color: #d0454f;
+        }
+
+        .priority-box {
+            padding: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+            border-radius: var(--radius);
+            border-left: 4px solid;
+        }
+
+        .priority-alta {
+            background: rgba(208, 69, 79, 0.1);
+            border-color: #d0454f;
+        }
+
+        .priority-alta strong {
+            color: #d0454f;
+        }
+
+        .priority-medio-alta {
+            background: rgba(245, 166, 35, 0.1);
+            border-color: #f5a623;
+        }
+
+        .priority-medio-alta strong {
+            color: #f5a623;
+        }
+
+        .priority-media {
+            background: rgba(245, 166, 35, 0.1);
+            border-color: #f5a623;
+        }
+
+        .priority-media strong {
+            color: #f5a623;
+        }
+
+        .priority-bassa {
+            background: rgba(45, 184, 126, 0.1);
+            border-color: #2db87e;
+        }
+
+        .priority-bassa strong {
+            color: #2db87e;
+        }
+
+        .button-group {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(32, 128, 145, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .btn-danger {
+            background: #f5f5f5;
+            color: var(--color-danger);
+            border: 1px solid var(--color-danger);
+        }
+
+        .btn-danger:hover {
+            background: rgba(208, 69, 79, 0.05);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .result-summary {
+            background: var(--color-surface);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin-top: var(--spacing-lg);
+            border: 2px solid var(--color-primary);
+        }
+
+        .result-summary h3 {
+            color: var(--color-primary);
+            margin-top: 0;
+        }
+
+        .result-line {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-line:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .result-value {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            margin-top: var(--spacing-md);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .success-message {
+            padding: var(--spacing-md);
+            background: rgba(45, 184, 126, 0.1);
+            color: #2db87e;
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-md);
+            border-left: 4px solid #2db87e;
+        }
+
+        .error-message {
+            padding: var(--spacing-md);
+            background: rgba(208, 69, 79, 0.1);
+            color: #d0454f;
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-md);
+            border-left: 4px solid #d0454f;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            padding: var(--spacing-md);
+            border-radius: 4px;
+            margin: var(--spacing-md) 0;
+            border-left: 4px solid var(--color-primary);
+            font-size: 13px;
+            color: var(--color-text-light);
+        }
+
+        .tab-navigation {
+            display: flex;
+            gap: var(--spacing-sm);
+            border-bottom: 2px solid var(--color-border);
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--color-text-light);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-btn:hover {
+            color: var(--color-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .storage-section {
+            background: linear-gradient(135deg, #208091 0%, #1a6370 100%);
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .storage-section h3 {
+            margin-top: 0;
+            color: white;
+            font-size: 18px;
+        }
+
+        .storage-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .btn-import {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-import:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .result-summary {
+            background: var(--color-surface);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            margin-top: var(--spacing-lg);
+            border: 3px solid var(--color-primary);
+            box-shadow: 0 4px 16px rgba(32, 128, 145, 0.15);
+        }
+
+        .result-summary h3 {
+            color: var(--color-primary);
+            margin-top: 0;
+            font-size: 22px;
+            border-bottom: 2px solid var(--color-primary);
+            padding-bottom: var(--spacing-md);
+        }
+
+        .riepilogo-sezione {
+            margin: var(--spacing-lg) 0;
+            padding: var(--spacing-md);
+            background: #f9f9f9;
+            border-radius: 6px;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .riepilogo-sezione h4 {
+            margin: 0 0 var(--spacing-md) 0;
+            color: var(--color-primary);
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .result-line {
+            display: grid;
+            grid-template-columns: 35% 65%;
+            gap: var(--spacing-md);
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .result-line:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 13px;
+        }
+
+        .result-value {
+            color: var(--color-primary);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .result-highlight {
+            background: rgba(45, 184, 126, 0.1);
+            border-left: 3px solid #2db87e;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 4px;
+            color: #2db87e;
+        }
+
+        .result-warning {
+            background: rgba(245, 166, 35, 0.1);
+            border-left: 3px solid #f5a623;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 4px;
+            color: #f5a623;
+        }
+
+        .result-danger {
+            background: rgba(208, 69, 79, 0.1);
+            border-left: 3px solid #d0454f;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 4px;
+            color: #d0454f;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .data-list {
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: white;
+            border-radius: 6px;
+            border: 1px solid var(--color-border);
+        }
+
+        .data-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+        }
+
+        .data-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-list-item-name {
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .data-list-item-date {
+            color: var(--color-text-light);
+            font-size: 12px;
+        }
+
+        .data-list-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--color-surface);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-primary);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Continuità Assistenziale Ostetrica</h1>
+            <p>Scheda Valutazione Priorità - Progetto di Continuità Assistenziale</p>
+        </div>
+
+        <div id="successMessage" class="success-message hidden">
+            ✓ Dati salvati con successo. Scarica il riepilogo sottostante.
+        </div>
+
+        <div id="errorMessage" class="error-message hidden">
+            ✗ Errore durante l'operazione. Riprova.
+        </div>
+
+        <div class="storage-section">
+            <h3>💾 Gestione Dati</h3>
+            <p style="margin-top: 0; font-size: 14px;">Salva, importa ed esporta le tue schede compilate</p>
+            
+            <div class="storage-buttons">
+                <button type="button" class="btn btn-primary" onclick="salvaNelBrowser()">💾 Salva Localmente</button>
+                <button type="button" class="btn btn-primary" onclick="importaDalFile()">📂 Importa da File</button>
+                <button type="button" class="btn btn-primary" onclick="visualizzaSalvataggi()">📋 Miei Salvataggi</button>
+                <input type="file" id="fileInput" accept=".json" style="display:none;" onchange="importaJSON(event)">
+            </div>
+        </div>
+
+        <div class="tab-navigation">
+            <button class="tab-btn active" onclick="switchTab('dati-madre')">👩 Dati Madre</button>
+            <button class="tab-btn" onclick="switchTab('dati-neonato')">👶 Dati Neonato</button>
+            <button class="tab-btn" onclick="switchTab('allattamento')">🍼 Valutazione Allattamento</button>
+            <button class="tab-btn" onclick="switchTab('priorita')">⚠️ Priorità</button>
+            <button class="tab-btn" onclick="switchTab('riepilogo')">📊 Riepilogo</button>
+        </div>
+
+        <form id="scheda-form">
+            <!-- TAB 1: DATI MADRE -->
+            <div id="dati-madre" class="tab-content active">
+                <div class="section">
+                    <h2>1. Anagrafica Madre</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Cognome e Nome Madre*</label>
+                            <input type="text" name="madre_cognome_nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefono*</label>
+                            <input type="tel" name="madre_telefono" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data Parto*</label>
+                            <input type="date" name="data_parto" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Data Dimissione Madre*</label>
+                            <input type="date" name="data_dimissione_madre" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>2. Adesione al Progetto</h2>
+                    <div class="form-group">
+                        <label>La donna aderisce al progetto "Continuità Assistenziale Ostetrica"?*</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="adesione-si" name="adesione_progetto" value="si" required>
+                                <label for="adesione-si">Sì</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="adesione-no" name="adesione_progetto" value="no">
+                                <label for="adesione-no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Se non aderisce, specificare motivo:</label>
+                        <textarea name="motivo_non_adesione" placeholder="Motivo (opzionale)"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: DATI NEONATO -->
+            <div id="dati-neonato" class="tab-content">
+                <div class="section">
+                    <h2>3. Anagrafica Neonato</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome Neonato*</label>
+                            <input type="text" name="neonato_nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Età Gestazionale alla Nascita (settimane)*</label>
+                            <input type="number" name="eta_gestazionale" min="20" max="43" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Data Dimissione Neonato*</label>
+                            <input type="date" name="data_dimissione_neonato" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Giorni di Vita alla Dimissione*</label>
+                            <input type="number" name="giorni_vita_dimissione" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Peso alla Nascita (grammi)*</label>
+                            <input type="number" name="peso_nascita" min="300" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Peso alla Dimissione (grammi)*</label>
+                            <input type="number" name="peso_dimissione" min="300" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>4. Allattamento Esclusivo</h2>
+                    <div class="form-group">
+                        <label>Allattamento Esclusivo?*</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="allatt-escl-si" name="allattamento_esclusivo" value="si" required>
+                                <label for="allatt-escl-si">Sì</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="allatt-escl-no" name="allattamento_esclusivo" value="no">
+                                <label for="allatt-escl-no">No (Complementare/Formula)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: VALUTAZIONE ALLATTAMENTO -->
+            <div id="allattamento" class="tab-content">
+                <div class="section">
+                    <h2>5. Valutazione Allattamento al Seno (Score Johnson)</h2>
+                    <div class="info-box">
+                        Rispondare "Sì" o "No" alle seguenti domande. Punteggio totale determinerà il rischio allattamento.
+                    </div>
+
+                    <div id="score-items">
+                        <!-- Generato da JavaScript -->
+                    </div>
+
+                    <div class="score-result">
+                        <strong>Score Totale:</strong> <span id="score-value">0</span> / 8
+                        <span id="score-risk" class="risk-indicator risk-low">Basso rischio</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>6. Valutazione Alimentazione (se non allattamento esclusivo)</h2>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="valuta_alimentazione" onchange="toggleAlimentazioneSection()">
+                            Valutare alimentazione complementare/formula
+                        </label>
+                    </div>
+
+                    <div id="alimentazione-section" class="hidden">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="alim_ricostituzione"> Conoscenza corretta ricostituzione latte
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="alim_somministrazione"> Conoscenza corretta somministrazione (quantità, pasti, posizione)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="alim_segnali"> Comprensione segnali neonato (pause, fame)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: PRIORITÀ -->
+            <div id="priorita" class="tab-content">
+                <div class="section">
+                    <h2>7. Valutazione Priorità di Presa in Carico</h2>
+
+                    <div class="info-box">
+                        <strong>Selezionare il livello di priorità in base alle condizioni materne e neonatali riportate nel modulo.</strong>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Priorità di Presa in Carico*</label>
+                        <div class="radio-group" style="flex-direction: column; gap: 16px;">
+                            <div class="radio-item">
+                                <input type="radio" id="priority-alta" name="priorita" value="alta" onchange="updatePriorityDisplay()">
+                                <label for="priority-alta" style="font-weight: 600; color: #d0454f;">🔴 ALTA/ALTISSIMA - Presa in carico IMMEDIATA</label>
+                            </div>
+                            <div class="priority-box priority-alta">
+                                <p><strong>Condizioni:</strong> Disturbi mentali gravi, sepsi, emorragia severa post-partum, donna senza dimora, violenza familiare, altre patologie critiche.</p>
+                                <p><strong>Azione:</strong> Procedura integrata ospedale-territorio</p>
+                            </div>
+
+                            <div class="radio-item">
+                                <input type="radio" id="priority-medio-alta" name="priorita" value="medio-alta" onchange="updatePriorityDisplay()">
+                                <label for="priority-medio-alta" style="font-weight: 600; color: #f5a623;">🟠 MEDIO-ALTA - Entro 3 giorni</label>
+                            </div>
+                            <div class="priority-box priority-medio-alta">
+                                <p><strong>Donna:</strong> Astenia, fatigue, anemia severa, cefalea, infezioni in trattamento, positività screening psichiatrico, mancato avvio allattamento, madre dimessa con neonato ricoverato.</p>
+                                <p><strong>Neonato:</strong> Score allattamento &lt;5, Late preterm, mancato incremento o calo ponderale.</p>
+                                <p><strong>Azione:</strong> Visita domicilio ostetrica entro 3 giorni + interventi specialistici</p>
+                            </div>
+
+                            <div class="radio-item">
+                                <input type="radio" id="priority-media" name="priorita" value="media" onchange="updatePriorityDisplay()">
+                                <label for="priority-media" style="font-weight: 600; color: #f5a623;">🟡 MEDIA - Entro 5 giorni</label>
+                            </div>
+                            <div class="priority-box priority-media">
+                                <p><strong>Donna:</strong> Rischio evolutivo patologie puerperio (obesità, ipertensione, emorragia post-partum, diabete, patologie croniche), sintomi perineali/mammari.</p>
+                                <p><strong>Neonato:</strong> Score allattamento 5-6, gemellarità, peso &lt;2500gr o &lt;10°percentile, accertamenti in corso, ricovero TI, separazione prolungata, fototerapia.</p>
+                                <p><strong>Azione:</strong> Presa in carico territoriale/ospedaliera entro 5 giorni</p>
+                            </div>
+
+                            <div class="radio-item">
+                                <input type="radio" id="priority-bassa" name="priorita" value="bassa" onchange="updatePriorityDisplay()">
+                                <label for="priority-bassa" style="font-weight: 600; color: #2db87e;">🟢 BASSA - Entro 7 giorni</label>
+                            </div>
+                            <div class="priority-box priority-bassa">
+                                <p><strong>Condizioni:</strong> Percorso materno-neonatale fisiologico, Score allattamento 7-8.</p>
+                                <p><strong>Azione:</strong> Supporto Universale: contatto telefonico, visita domicilio ostetrica, follow-up consultorio</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Se altro, specificare:</label>
+                        <textarea name="priorita_altro" placeholder="Descrizione del livello di priorità non standard"></textarea>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>8. Presa in Carico</h2>
+                    <div class="form-group">
+                        <label>Tipo di Presa in Carico*</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="presa-ospedaliera" name="presa_carico" value="ospedaliera" required>
+                                <label for="presa-ospedaliera">Ospedaliera</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="presa-territoriale" name="presa_carico" value="territoriale">
+                                <label for="presa-territoriale">Territoriale</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Se Territoriale, presso quale struttura?</label>
+                        <input type="text" name="struttura_territoriale" placeholder="es. Consultorio Familiare [Nome]">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Note Compilatore</label>
+                        <textarea name="note_compilatore" placeholder="Osservazioni e note aggiuntive"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nome e Qualifica Compilatore (Punto Nascita)*</label>
+                        <input type="text" name="compilatore_qualifica" placeholder="es. Dr.ssa Rossi Maria - Ostetrica" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: RIEPILOGO -->
+            <div id="riepilogo" class="tab-content">
+                <div id="result-summary" class="hidden">
+                    <div class="result-summary">
+                        <h3>📋 RIEPILOGO SCHEDA VALUTAZIONE PRIORITÀ</h3>
+                        <div id="riepilogo-contenuto"></div>
+                    </div>
+
+                    <div class="export-buttons">
+                        <button type="button" class="btn btn-primary" onclick="exportJSON()">📥 Scarica JSON</button>
+                        <button type="button" class="btn btn-primary" onclick="exportExcel()">📊 Esporta Excel</button>
+                        <button type="button" class="btn btn-primary" onclick="printForm()">🖨️ Stampa</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">🔄 Nuovo Modulo</button>
+                    </div>
+                </div>
+
+                <div id="preview-area"></div>
+            </div>
+        </form>
+
+        <div class="button-group" style="margin-top: var(--spacing-lg);">
+            <button type="button" class="btn btn-primary" onclick="salvaEValida()">✓ Salva e Valida</button>
+            <button type="button" class="btn btn-secondary" onclick="resetForm()">🔄 Cancella</button>
+        </div>
+    </div>
+
+    <script>
+        // Items di valutazione allattamento
+        const scoreItems = [
+            "La madre è in grado di attaccare il bambino al seno",
+            "Il bambino si attacca senza difficoltà",
+            "Il bambino poppa con una suzione valida",
+            "La madre non ha capezzoli piatti o invertiti",
+            "La madre ha allattato il bambino almeno 3-4 volte in ospedale o 5-6 volte dalla dimissione",
+            "Il bambino ha avuto > 2 pannolini ben bagnati in 24h prima dimissione o > 6 pannolini dopo",
+            "La madre ha precedente esperienza di allattamento al seno di successo",
+            "La madre ha partner/persona che la sostiene per l'allattamento"
+        ];
+
+        // Inizializza tab e score items
+        document.addEventListener('DOMContentLoaded', function() {
+            generateScoreItems();
+        });
+
+        function generateScoreItems() {
+            const container = document.getElementById('score-items');
+            scoreItems.forEach((item, index) => {
+                const itemNum = index + 1;
+                const html = `
+                    <div class="score-item">
+                        <div style="flex: 1;">
+                            <strong>${itemNum}.</strong> ${item}
+                        </div>
+                        <div style="display: flex; gap: 16px;">
+                            <div class="radio-item">
+                                <input type="radio" name="score-${index}" value="1" onchange="updateScore()">
+                                <label>Sì</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="score-${index}" value="0" onchange="updateScore()">
+                                <label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        function updateScore() {
+            let score = 0;
+            for (let i = 0; i < scoreItems.length; i++) {
+                const selected = document.querySelector(`input[name="score-${i}"]:checked`);
+                if (selected) {
+                    score += parseInt(selected.value);
+                }
+            }
+
+            document.getElementById('score-value').textContent = score;
+
+            const riskIndicator = document.getElementById('score-risk');
+            riskIndicator.classList.remove('risk-low', 'risk-medium', 'risk-high');
+
+            if (score >= 7) {
+                riskIndicator.classList.add('risk-low');
+                riskIndicator.textContent = 'Basso rischio (7-8)';
+            } else if (score >= 5) {
+                riskIndicator.classList.add('risk-medium');
+                riskIndicator.textContent = 'Rischio medio (5-6)';
+            } else {
+                riskIndicator.classList.add('risk-high');
+                riskIndicator.textContent = 'Rischio alto (<5)';
+            }
+        }
+
+        function switchTab(tabName) {
+            // Nascondi tutti i tab
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Deseleziona tutti i bottoni
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Mostra tab selezionato
+            document.getElementById(tabName).classList.add('active');
+
+            // Seleziona bottone
+            event.target.classList.add('active');
+        }
+
+        function toggleAlimentazioneSection() {
+            const section = document.getElementById('alimentazione-section');
+            const checkbox = document.querySelector('input[name="valuta_alimentazione"]');
+            if (checkbox.checked) {
+                section.classList.remove('hidden');
+            } else {
+                section.classList.add('hidden');
+            }
+        }
+
+        function updatePriorityDisplay() {
+            // Aggiorna solo la visualizzazione, niente di complesso
+        }
+
+        function salvaEValida() {
+            const form = document.getElementById('scheda-form');
+
+            // Validazione campi obbligatori
+            if (!form.checkValidity()) {
+                alert('⚠️ Compila tutti i campi obbligatori (contrassegnati con *)');
+                return;
+            }
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            // Aggiungi score allattamento
+            let scoreAllattamento = 0;
+            for (let i = 0; i < scoreItems.length; i++) {
+                const selected = document.querySelector(`input[name="score-${i}"]:checked`);
+                if (selected) {
+                    scoreAllattamento += parseInt(selected.value);
+                }
+            }
+            data.score_allattamento = scoreAllattamento;
+
+            // Mostra messaggio successo
+            document.getElementById('successMessage').classList.remove('hidden');
+
+            // Mostra riepilogo
+            mostraRiepilogo(data);
+
+            // Scrolla verso il riepilogo
+            document.querySelector('.tab-btn:last-child').click();
+
+            setTimeout(() => {
+                document.getElementById('successMessage').classList.add('hidden');
+            }, 5000);
+        }
+
+        function mostraRiepilogo(data) {
+            const riepilogoDiv = document.getElementById('riepilogo-contenuto');
+            let html = '';
+
+            // Sezione madre
+            html += `
+                <div class="result-line">
+                    <span class="result-label">Cognome Nome Madre:</span>
+                    <span class="result-value">${data.madre_cognome_nome || '-'}</span>
+                </div>
+                <div class="result-line">
+                    <span class="result-label">Data Parto:</span>
+                    <span class="result-value">${data.data_parto || '-'}</span>
+                </div>
+                <div class="result-line">
+                    <span class="result-label">Telefono:</span>
+                    <span class="result-value">${data.madre_telefono || '-'}</span>
+                </div>
+                <div class="result-line">
+                    <span class="result-label">Adesione Progetto:</span>
+                    <span class="result-value">${data.adesione_progetto === 'si' ? '✓ Sì' : '✗ No'}</span>
+                </div>
+
+                <hr style="margin: 16px 0; border: none; border-top: 1px solid #eee;">
+
+                <div class="result-line">
+                    <span class="result-label">Nome Neonato:</span>
+                    <span class="result-value">${data.neonato_nome || '-'}</span>
+                </div>
+                <div class="result-line">
+                    <span class="result-label">Età Gestazionale:</span>
+                    <span class="result-value">${data.eta_gestazionale} settimane</span>
+                </div>
+                <div class="result-line">
+                    <span class="result-label">Peso Nascita:</span>
+                    <span class="result-value">${data.peso_nascita} gr</span>
+                </div>
+                <div class="result-line">
+                    <span class="result-label">Peso Dimissione:</span>
+                    <span class="result-value">${data.peso_dimissione} gr</span>
+                </div>
+
+                <hr style="margin: 16px 0; border: none; border-top: 1px solid #eee;">
+
+                <div class="result-line">
+                    <span class="result-label">Score Allattamento:</span>
+                    <span class="result-value">${data.score_allattamento}/8</span>
+                </div>
+                <div class="result-line">
+                    <span class="result-label">Allattamento Esclusivo:</span>
+                    <span class="result-value">${data.allattamento_esclusivo === 'si' ? '✓ Sì' : '✗ No'}</span>
+                </div>
+
+                <hr style="margin: 16px 0; border: none; border-top: 1px solid #eee;">
+
+                <div class="result-line">
+                    <span class="result-label">Priorità:</span>
+                    <span class="result-value">${(data.priorita || '-').toUpperCase()}</span>
+                </div>
+                <div class="result-line">
+                    <span class="result-label">Presa in Carico:</span>
+                    <span class="result-value">${(data.presa_carico || '-').toUpperCase()}</span>
+                </div>
+                <div class="result-line">
+                    <span class="result-label">Struttura:</span>
+                    <span class="result-value">${data.struttura_territoriale || data.presa_carico === 'ospedaliera' ? 'Ospedaliera' : '-'}</span>
+                </div>
+
+                <hr style="margin: 16px 0; border: none; border-top: 1px solid #eee;">
+
+                <div class="result-line">
+                    <span class="result-label">Compilatore:</span>
+                    <span class="result-value">${data.compilatore_qualifica || '-'}</span>
+                </div>
+            `;
+
+            riepilogoDiv.innerHTML = html;
+            document.getElementById('result-summary').classList.remove('hidden');
+
+            // Salva dati in variabile globale per export
+            window.lastFormData = data;
+        }
+
+        function exportJSON() {
+            if (!window.lastFormData) return;
+
+            const dataStr = JSON.stringify(window.lastFormData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `scheda-continuita-ostetrica-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function printForm() {
+            window.print();
+        }
+
+        function resetForm() {
+            document.getElementById('scheda-form').reset();
+            document.getElementById('result-summary').classList.add('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+            document.getElementById('score-value').textContent = '0';
+            document.querySelector('.tab-btn:first-child').click();
+        }
+    </script>
+</body>
+</html>
